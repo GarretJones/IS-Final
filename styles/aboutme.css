@@ -1,0 +1,53 @@
+/* dang that wild */
+
+a {
+    color:maroon;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+a:visited {
+    color: rgba(0, 0, 0, 0);
+}
+.resumeListHeading {
+    font-weight: bold;
+    font-style: normal;
+}
+.underline {text-decoration: underline;}
+.bold {font-weight: bold;}
+.justify {text-align: justify;}
+.homebg {
+    background-image: url(../Images/90.jpeg);
+    background-position: top right;
+    /* background-repeat: repeat-x; */
+}
+
+.box1{
+    border-width: 1px;
+    border-style: solid;
+    border-color: gray;
+}
+.box2{
+    padding: 5px;
+}
+.box3{
+    margin: 50px;
+}
+/* Set the background color for the whole page */
+.body {
+    background-color: #81b1dc;  /* Custom background color (light blue) */
+    font-family: 'Times New Roman', Times, serif, sans-serif; /* Optional: set font */
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Ensure the background covers the whole page */
+    font-weight: bold;
+    color: black;
+}
+
+.text{
+    font-weight: bold;
+    color: black;
+
+
+}

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <nav>
+        <a class="a" href="../index.html" >Home</a> |
+        <a class="a" href="../html/myresume.html">Resume</a> |
+        <a class="a" href="../html/aboutme.html">About Me</a> <br><br>
+    </nav>
+    <title>Tic-Tac-Toe Game</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and Layout */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        /* Game Container */
+        .game-container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Board Layout */
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 5px;
+            margin: 20px 0;
+        }
+
+        /* Cells of the Tic-Tac-Toe board */
+        .cell {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            background-color: #e0e0e0;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .cell:hover {
+            background-color: #d0d0d0;
+        }
+
+        /* Button Styles */
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Game message */
+        #message {
+            font-size: 1.2em;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Tic-Tac-Toe</h1>
+        <div class="board" id="board">
+            <div class="cell" id="cell-0"></div>
+            <div class="cell" id="cell-1"></div>
+            <div class="cell" id="cell-2"></div>
+            <div class="cell" id="cell-3"></div>
+            <div class="cell" id="cell-4"></div>
+            <div class="cell" id="cell-5"></div>
+            <div class="cell" id="cell-6"></div>
+            <div class="cell" id="cell-7"></div>
+            <div class="cell" id="cell-8"></div>
+        </div>
+        <button id="restart-btn">Restart</button>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        let currentPlayer = 'X'; // Start with player X
+        let gameBoard = ['', '', '', '', '', '', '', '', '']; // Game board state
+        let gameActive = true; // Game is active when it's true
+        const cells = document.querySelectorAll('.cell');
+        const message = document.getElementById('message');
+        const restartButton = document.getElementById('restart-btn');
+
+        // Function to check for a winner
+        const checkWinner = () => {
+            const winningCombinations = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+
+            for (let combination of winningCombinations) {
+                const [a, b, c] = combination;
+                if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
+                    return gameBoard[a]; // Return the winner ('X' or 'O')
+                }
+            }
+            return null; // No winner yet
+        };
+
+        // Function to handle a player's move
+        const handleCellClick = (index) => {
+            if (gameBoard[index] || !gameActive) return; // If the cell is already filled or game is over, do nothing
+
+            gameBoard[index] = currentPlayer; // Mark the cell with the current player
+            cells[index].textContent = currentPlayer; // Display the player's symbol in the cell
+
+            // Check for a winner
+            const winner = checkWinner();
+            if (winner) {
+                message.textContent = `${winner} wins!`; // Display winner message
+                gameActive = false; // End the game
+                return;
+            }
+
+            // Check if the game is a tie (no empty cells)
+            if (!gameBoard.includes('')) {
+                message.textContent = 'It\'s a tie!';
+                gameActive = false;
+                return;
+            }
+
+            // Switch to the other player
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            message.textContent = `Player ${currentPlayer}'s turn`; // Show whose turn it is
+        };
+
+        // Function to restart the game
+        const restartGame = () => {
+            gameBoard = ['', '', '', '', '', '', '', '', '']; // Reset the board
+            gameActive = true; // Activate the game
+            currentPlayer = 'X'; // Start with player X
+            cells.forEach(cell => cell.textContent = ''); // Clear all cells
+            message.textContent = `Player ${currentPlayer}'s turn`; // Reset the message
+        };
+
+        // Attach click event listeners to the cells
+        cells.forEach((cell, index) => {
+            cell.addEventListener('click', () => handleCellClick(index));
+        });
+
+        // Restart the game when the restart button is clicked
+        restartButton.addEventListener('click', restartGame);
+
+        // Initial message
+        message.textContent = `Player ${currentPlayer}'s turn`;
+    </script>
+</body>
+</html>
+
